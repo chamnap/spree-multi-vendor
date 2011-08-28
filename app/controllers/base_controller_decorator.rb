@@ -12,7 +12,7 @@ Spree::BaseController.class_eval do
     EOF") do |pipe|
       databases = pipe.read.split("\n")
     end
-    databases = []
+    
     if databases.include? database
       ActiveRecord::Base.establish_connection(
         :adapter => config.adapter,
