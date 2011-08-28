@@ -3,13 +3,7 @@ require 'spree_multi_vendor_hooks'
 require 'spree_multi_vendor/configuration'
 
 module Spree::MultiVendor
-  Config = Spree::MultiVendor::Configuration.configure do |config|
-    config.database_prefix = "ecommerce_"
-    config.adapter = "mysql2"
-    config.host = "localhost"
-    config.username = "root"
-    config.password = ""
-  end
+  Config = Spree::MultiVendor::Configuration.new
 end
 
 module SpreeMultiVendor
