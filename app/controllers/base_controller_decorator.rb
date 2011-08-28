@@ -4,23 +4,9 @@ Spree::BaseController.class_eval do
   def set_connection
     config = Spree::MultiVendor::Config
     
-    database = config.database_prefix + request.host.gsub('.', '_')
-    databases = []
-    IO.popen("mysql -u #{config.username} -p#{config.password}<< EOF
-      show databases;
-      exit
-    EOF") do |pipe|
-      databases = pipe.read.split("\n")
-    end
-    
-    if databases.include? database
-      ActiveRecord::Base.establish_connection(
-        :adapter => config.adapter,
-        :database => database,
-        :username => config.username,
-        :password => config.password,
-        :host => config.host
-      )
+    config.current_database = config.database_prefix + request.host.gsub('.', '_')
+    if config.database_exist?
+      ActiveRecord::Base.establish_connection(config.connection_hash)
     else
       render :file => "public/404.html", :status => 404, :layout => false
     end

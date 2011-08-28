@@ -2,9 +2,7 @@ require 'spree_core'
 require 'spree_multi_vendor_hooks'
 require 'spree_multi_vendor/configuration'
 
-module Spree::MultiVendor
-  Config = Spree::MultiVendor::Configuration.new
-end
+Spree::MultiVendor::Config = Spree::MultiVendor::Configuration.new(YAML.load_file("config/database.yml")["production"])
 
 module SpreeMultiVendor
   class Engine < Rails::Engine
